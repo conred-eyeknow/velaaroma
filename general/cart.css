@@ -1,0 +1,162 @@
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+header h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.product-container {
+    width: 65%;
+}
+
+.summary-container {
+    width: 30%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: right;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+table thead th {
+    background-color: #f2f2f2;
+    padding: 12px;
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:nth-of-type(odd) {
+    background-color: #ffffff;
+}
+
+table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.totals {
+    margin-top: 20px;
+}
+
+.totals p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+#paypal-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#user-info-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+#user-info-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+#user-info-form .form-control {
+    width: 100%;
+    border-radius: 25px;
+}
+
+#user-info-form button {
+    width: 100%;
+    border-radius: 25px;
+}
+
+#user-info-form .close-btn {
+
+    background: none;
+    border: none;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+    padding-left: 80%;
+}
+
+#proceed-to-payment {
+    background-color: #ff9900;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    border-radius: 25px;
+}
+
+#proceed-to-payment:hover {
+    background-color: #e68a00;
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .product-container, .summary-container {
+        width: 100%;
+    }
+
+    #user-info-form {
+        width: 90%;
+    }
+
+    table, table thead, table tbody, table th, table td, table tr {
+        display: block;
+    }
+
+    table thead tr {
+        display: none;
+    }
+
+    table tbody tr {
+        margin-bottom: 15px;
+    }
+
+    table tbody td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    table tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
