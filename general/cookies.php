@@ -1,5 +1,3 @@
-
-
 <!-- Modal -->
 <div id="productModal" class="modal">
     <div class="modal-content">
@@ -14,21 +12,16 @@
             <p class="hideElement" id="modalId"></p>
         </div>
         
-        <!-- Combo para seleccionar la cantidad de productos -->
+        <!--
+       
         <div style="text-align: center; margin-bottom: 20px;">
             <h3>Cantidad:</h3>
-            <select id="quantitySelect">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
+            <input id="quantitySelect" />
         </div>
 
-        <!-- Contenedor para colores y aromas en la misma fila -->
+       
         <div style="display: flex; justify-content: space-around; margin-bottom: 20px;">
-            <!-- Combo para seleccionar el color -->
+           
             <div>
                 <h3>Colores Disponibles:</h3>
                 <select id="colorSelect">
@@ -40,26 +33,73 @@
                 </select>
             </div>
 
-            <!-- Combo para seleccionar el aroma -->
+            
             <div>
                 <h3>Aromas Disponibles:</h3>
                 <select id="aromaSelect">
                     <option value="Lavanda">Lavanda</option>
                     <option value="Vainilla">Vainilla</option>
                     <option value="Canela">Canela</option>
-                    <option value="Jazmín">Jazmín</option>
-                    <option value="Rosa">Rosa</option>
+                    <option value="Naranja Vainilla">Naranja Vainilla</option>
+                    <option value="Maderas">Maderas</option>
+                    <option value="Citronela">Citronela</option>
+                    <option value="Frutos Rojos">Frutos Rojos</option>
+                    <option value="Romero Verbena">Romero Verbena</option>
+                    <option value="Manzana-Canela">Manzana-Canela</option>
+                    <option value="Bambú y Flor de Naranjo">Bambú y Flor de Naranjo</option>
+                    <option value="Menta">Menta</option>
+                    <option value="Orquídea">Orquídea</option>
+                    <option value="Manzanilla">Manzanilla</option>
+                    <option value="Mandarina">Mandarina</option>
+                    <option value="Cedro">Cedro</option>
+                    <option value="Violeta">Violeta</option>
+                    <option value="Ciprés">Ciprés</option>
+                    <option value="Limón">Limón</option>
+                    <option value="Sándalo">Sándalo</option>
+                    <option value="Cempasúchil">Cempasúchil</option>
+                    <option value="Pan de Muerto">Pan de Muerto</option>
+                    <option value="Coco">Coco</option>
+                    <option value="Bosque Navideño">Bosque Navideño</option>
+                    <option value="Bastón de Caramelo">Bastón de Caramelo</option>
+                    <option value="Galleta de Jengibre">Galleta de Jengibre</option>
+                    <option value="Pino Navideño">Pino Navideño</option>
+                    <option value="Flor de Nochebuena">Flor de Nochebuena</option>
+                    <option value="Chocolate y Caramelo">Chocolate y Caramelo</option>
+                    <option value="Café">Café</option>
+                    <option value="Tutti Frutti">Tutti Frutti</option>
+                    <option value="Cereza">Cereza</option>
+                    <option value="Maderas Mediterráneas">Maderas Mediterráneas</option>
                 </select>
             </div>
         </div>
 
-        <!-- Botón para enviar la información -->
+       
         <div style="text-align: center; margin-top: 20px;">
             <button id="addToCartButton" style="padding: 10px 20px; font-size: 16px;" onclick="addToCartButton()">Añadir al Carrito</button>
         </div>
+        -->
     </div>
 </div>
 
+<a href="https://wa.me/5215548611076" class="whatsapp_float" target="_blank"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp">
+</a>
+
+<style>
+    .whatsapp_float {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        z-index: 100;
+    }
+    .whatsapp_float img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
 
 <script>
     // Get the modal
@@ -72,7 +112,8 @@
     function openModal(event) {
         var product = event.currentTarget.closest('.product');
         var imageSrc = product.querySelector('img').src;
-        var title = product.querySelector('h2').innerText.replace('ver más', '').trim();  // Reemplaza 'ver más' y elimina espacios        var price = product.querySelector('p:nth-of-type(1)').innerText;
+        var title = product.querySelector('h2').innerText.replace('ver más', '').trim(); // Reemplaza 'ver más' y elimina espacios
+        var price = product.querySelector('p:nth-of-type(1)').innerText;
         var measures = product.querySelector('p:nth-of-type(2)').innerText;
         var realPrices = product.querySelector('p:nth-of-type(3)').innerText;
         var mayoreoPrices = product.querySelector('p:nth-of-type(4)').innerText;
@@ -109,7 +150,6 @@
     }
 
     function addToCartButton() {
-
         var product_id = document.getElementById('modalId').innerText;
         var cantidad = document.getElementById('quantitySelect').value;
         var color = document.getElementById('colorSelect').value;
@@ -120,13 +160,12 @@
         $.ajax({
             url: 'https://api.velaaroma.com/v1/cart/products',
             type: "POST",
-            data:'username=' + username + '&status=' + status + '&color=' + color + '&aroma=' + aroma
+            data: 'username=' + username + '&status=' + status + '&color=' + color + '&aroma=' + aroma
             + '&cantidad=' + cantidad + '&product_id=' + product_id,
             success: function(response){ 
                 updateCartCount();
             }
         });
-
     }
 
     validate_login();
@@ -135,86 +174,77 @@
     function getCookie(name) {
         var nameEQ = name + "=";
         var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
         }
         return null;
-    } 
+    }
 
-    function setCookie(name,value,days) {
+    function setCookie(name, value, days) {
         var expires = "";
         if (days) {
             var date = new Date();
-            date.setTime(date.getTime() + (days*24*60*60*1000));
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = "; expires=" + date.toUTCString();
         }
-        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
 
     function deleteCookie(name) {
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
 
-    function validate_login(){
-
+    function validate_login() {
         console.log("Revisando inicio de sesión...");
 
         var username = getCookie("username");
         var name = getCookie("name");
-        
+
         console.log("Username: " + username);
         console.log("Name: " + name);
 
-        if(username == null){
+        if (username == null) {
             username = "usuario" + Math.floor(Math.random() * 1000) + "_" + Math.floor(Math.random() * 1000);
-            setCookie("username", username ,30);
-
-            //document.getElementById("close_sesion").classList.add("invisible");
-            //document.getElementById("register").classList.add("hidden");
-
+            setCookie("username", username, 30);
         } else {
-            if(name == null){
-            } else {
+            if (name != null) {
                 var loginLink = document.querySelector('.login-link');
                 loginLink.textContent = "Hola, " + name + "!";
-
-                //document.getElementById("close_sesion").classList.add("hidden");
-                //document.getElementById("register").classList.add("invisible");
-                //document.getElementById("enter").classList.add("invisible");
             }
         }
     }
 
-    function close_sesion(){
+    function close_sesion() {
         deleteCookie("name");
         deleteCookie("username");
     }
 
     function updateCartCount() {
-
         var username = getCookie("username");
         var status = "in_progress";
 
         $.ajax({
             url: 'https://api.velaaroma.com/v1/cart/products',
             type: "GET",
-            data:'username=' + username + '&status=' + status,
+            data: 'username=' + username + '&status=' + status,
             success: function(response){ 
                 document.querySelector('.cart-count').textContent = response.products;
             }
         });
-
     }
 
-    function generateProductHTML(product) {
+    function generateProductHTML(product, isLongPage) {
+        console.log(product + " " + isLongPage);
+
+        const imageClass = isLongPage ? 'long-image' : '';
         return `
             <div class="product">
-                <img src="${product.url}" alt="${product.name}">
+                <img class="${imageClass}" src="${product.url}" alt="${product.name}">
                 <h2>${product.name}<span class="view-more">ver más</span></h2>
                 <p>Desde $${product.menudeo}.00 pesos</p>
-                <p>Medidas: ${product.alto}x${product.ancho}x${product.largo} [cm]</p>
+                <p>Medidas: ${product.alto} x ${product.ancho} x ${product.largo} [cm]</p>
                 <p class="hideElement">Precio: $${product.menudeo}</p>
                 <p class="hideElement">Precio Mayoreo: $${product.mayoreo}</p>
                 <p class="hideElement">${product.id}</p>
@@ -222,12 +252,12 @@
         `;
     }
 
-    function populateProducts(products) {
+    function populateProducts(products, isLongPage = false) {
         const productContainer = document.getElementById('productContainer');
         let productHTML = '';
 
         products.forEach((product, index) => {
-            productHTML += generateProductHTML(product);
+            productHTML += generateProductHTML(product, isLongPage);
             if ((index + 1) % 3 === 0) {
                 productHTML += '<div style="flex-basis: 100%; height: 0;"></div>'; // Añade un separador cada 3 productos
             }
@@ -239,23 +269,21 @@
         addEventListenersToProducts();
     }
 
-    function getProductsByCategory(category) {
+    function getProductsByCategory(category, isLongImage) {
         $.ajax({
             url: 'https://api.velaaroma.com/v1/cart/products/category',
             type: "GET",
             data: 'category=' + category,
             success: function(response){ 
                 console.log(response.products);
-                populateProducts(response.products);
+                populateProducts(response.products, isLongImage);
             }
         });
     }
 
-
 </script>
 
 <style>
-
     .hidden {
         display: none;
     }
@@ -277,5 +305,4 @@
         object-fit: cover;
         border-radius: 8px;
     }
-
 </style>

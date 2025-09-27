@@ -1,6 +1,13 @@
+<?php
+
+header('Access-Control-Allow-Origin: *');
+
+?>
+
 <!doctype html>
 <html lang="es">
 <head>
+<meta name="facebook-domain-verification" content="mwhulkkmqrkmh47mf93fobusxxgir3" />
     <meta charset="utf-8">
     <title>Vela Aroma</title>    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,21 +26,29 @@
 <?php include_once "./general/header.php"; ?>
 
 <div class="cards-container">
-    <a href="./figuras-aroma.php" class="card">
+    <a href="./velas-figuras/" class="card">
         <img src="./../images/figuras_aroma_1.jpg" alt="Velas con Figuras">
         <div class="card-text">Velas con Figuras</div>
     </a>
-    <a href="./velas-yeso.php" class="card">
+    <a href="./velas-yeso/" class="card">
         <img src="./../images/velas_yeso_1.jpg" alt="Velas de yeso">
         <div class="card-text">Velas recipiente de yeso</div>
     </a>
-    <a href="./velas-vidrio.php" class="card">
+    <a href="./velas-vidrio/" class="card">
         <img src="./../images/velas_vidrio_1.jpg" alt="Velas de yeso">
         <div class="card-text">Velas recipiente vidrio</div>
     </a>
-    <a href="dia-de-muertos.php" class="card">
+    <a href="./velas-dia-de-muertos/" class="card">
         <img src="./../images/dia_de_muertos_2.jpg" alt="Día de muertos">
         <div class="card-text">Día de muertos</div>
+    </a>
+    <a href="./navidad/" class="card">
+        <img src="./../images/figura_aroma_35.jpg" alt="Navidad">
+        <div class="card-text">Navidad</div>
+    </a>
+    <a href="./eventos/" class="card">
+        <img src="./../images/figura_aroma_36.jpg" alt="Eventos">
+        <div class="card-text">Eventos</div>
     </a>
 </div>
 
@@ -78,11 +93,11 @@
         },
         speed: 800, // Velocidad de la transición
     });
-
 </script>
 
 <?php include_once "./js/js.php"; ?>
 <?php include_once "./general/cookies.php"; ?>
+
 
 </body>
 </html>

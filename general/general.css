@@ -566,3 +566,10 @@ body {
         padding: 20px;
     }
 }
+
+/* Estilos generales para las imágenes */
+.product img {
+    max-width: 100%;
+    height: auto;
+}
+
