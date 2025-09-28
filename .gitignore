@@ -4,18 +4,11 @@
 # ==============================================
 
 # === ARCHIVOS DE CONFIGURACIÓN SENSIBLES ===
-# Credenciales de base de datos
-**/mysql_config*.php
-**/database_config*.php
-api/mysql_config.php
-api/mysql_config_real.php
-api/mysql_config_prod.php
-
-# Archivos de configuración con contraseñas
-config.php
-.env
-.env.local
-.env.production
+# Archivos de configuración con contraseñas (deshabilitado - se permite en git)
+# config.php
+# .env
+# .env.local
+# .env.production
 
 # === ARCHIVOS DE DESARROLLO Y TESTING ===
 # Archivos de prueba temporales
