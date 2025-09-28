@@ -42,7 +42,7 @@ class MySQLCartController {
             return;
         }
         
-        $sql = "SELECT * FROM va_cart WHERE username = ? AND status = ? AND deleted_at IS NULL";
+        $sql = "SELECT * FROM cart WHERE username = ? AND status = ? AND deleted_at IS NULL";
         $result = MySQLDB::fetchAll($sql, [$username, $status]);
         
         sendJsonResponse(['products' => count($result)]);
@@ -57,10 +57,10 @@ class MySQLCartController {
             return;
         }
         
-        $sql = "SELECT vc.id, vlp.name as product_id, vc.aroma, vc.color, vc.cantidad, vc.valor 
-                FROM va_cart vc 
-                INNER JOIN va_list_product vlp ON vc.product_id = vlp.id 
-                WHERE vc.username = ? AND vc.status = ? AND vc.deleted_at IS NULL";
+        $sql = "SELECT c.id, lp.name as product_id, c.aroma, c.color, c.cantidad, c.valor 
+                FROM cart c 
+                INNER JOIN list_product lp ON c.product_id = lp.id 
+                WHERE c.username = ? AND c.status = ? AND c.deleted_at IS NULL";
         $result = MySQLDB::fetchAll($sql, [$username, $status]);
         
         sendJsonResponse(['products' => $result]);
@@ -81,12 +81,12 @@ class MySQLCartController {
         }
         
         // Verificar si el producto ya está en el carrito
-        $sql = "SELECT * FROM va_cart WHERE product_id = ? AND aroma = ? AND color = ? AND username = ? AND status = 'in_progress' AND deleted_at IS NULL";
+        $sql = "SELECT * FROM cart WHERE product_id = ? AND aroma = ? AND color = ? AND username = ? AND status = 'in_progress' AND deleted_at IS NULL";
         $existingProduct = MySQLDB::fetchAll($sql, [$product_id, $aroma, $color, $username]);
         
         if (empty($existingProduct)) {
             // Obtener precios del producto
-            $sql = "SELECT * FROM va_list_product WHERE id = ?";
+            $sql = "SELECT * FROM list_product WHERE id = ?";
             $productInfo = MySQLDB::fetchOne($sql, [$product_id]);
             
             if (!$productInfo) {
@@ -100,7 +100,7 @@ class MySQLCartController {
             $valor = ($cantidad > 4) ? $cantidad * $mayoreo : $cantidad * $menudeo;
             
             // Insertar nuevo producto al carrito
-            $sql = "INSERT INTO va_cart (username, product_id, color, aroma, cantidad, valor, status) 
+            $sql = "INSERT INTO cart (username, product_id, color, aroma, cantidad, valor, status) 
                     VALUES (?, ?, ?, ?, ?, ?, ?)";
             MySQLDB::execute($sql, [$username, $product_id, $color, $aroma, $cantidad, $valor, $status]);
             
@@ -110,7 +110,7 @@ class MySQLCartController {
             $cart_id = $existingProduct[0]->id;
             
             // Obtener precios del producto
-            $sql = "SELECT * FROM va_list_product WHERE id = ?";
+            $sql = "SELECT * FROM list_product WHERE id = ?";
             $productInfo = MySQLDB::fetchOne($sql, [$product_id]);
             
             $mayoreo = $productInfo->mayoreo;
@@ -120,7 +120,7 @@ class MySQLCartController {
             $valor = ($newCantidad > 3) ? $newCantidad * $mayoreo : $newCantidad * $menudeo;
             
             // Actualizar carrito
-            $sql = "UPDATE va_cart SET cantidad = ?, valor = ? WHERE id = ?";
+            $sql = "UPDATE cart SET cantidad = ?, valor = ? WHERE id = ?";
             MySQLDB::execute($sql, [$newCantidad, $valor, $cart_id]);
         }
         
@@ -141,10 +141,10 @@ class MySQLCartController {
         
         try {
             // Obtener productos del carrito
-            $sql = "SELECT vc.id, vlp.name as product_id, vc.aroma, vc.color, vc.cantidad, vc.valor, vlp.menudeo, vlp.mayoreo
-                    FROM va_cart vc 
-                    INNER JOIN va_list_product vlp ON vc.product_id = vlp.id 
-                    WHERE vc.username = ? AND vc.status = 'in_progress' AND vc.deleted_at IS NULL";
+            $sql = "SELECT c.id, lp.name as product_id, c.aroma, c.color, c.cantidad, c.valor, lp.menudeo, lp.mayoreo
+                    FROM cart c 
+                    INNER JOIN list_product lp ON c.product_id = lp.id 
+                    WHERE c.username = ? AND c.status = 'in_progress' AND c.deleted_at IS NULL";
             $cartItems = MySQLDB::fetchAll($sql, [$username]);
             
             if (empty($cartItems)) {
@@ -161,15 +161,15 @@ class MySQLCartController {
             }
             
             // Marcar productos como completados
-            $sql = "UPDATE va_cart SET status = 'completed' WHERE status = 'in_progress' AND username = ?";
+            $sql = "UPDATE cart SET status = 'completed' WHERE status = 'in_progress' AND username = ?";
             MySQLDB::execute($sql, [$username]);
             
             // Obtener email del usuario para envío
-            $sql = "SELECT virtual_address FROM va_users WHERE username = ?";
+            $sql = "SELECT email FROM users WHERE username = ?";
             $user = MySQLDB::fetchOne($sql, [$username]);
             
             if ($user) {
-                $email = $user->virtual_address . ",ivan.balderas.serrano@gmail.com";
+                $email = $user->email . ",ivan.balderas.serrano@gmail.com";
                 $subject = "Vela Aroma | Compra exitosa";
                 $emailBody = $this->generatePurchaseEmail($username, $totalQuantity, $totalValue, $cartItems);
                 sendEmail($email, $subject, $emailBody);
@@ -201,11 +201,11 @@ class MySQLCartController {
         
         if (!empty($product_id)) {
             // Actualizar producto específico
-            $sql = "UPDATE va_cart SET status = ? WHERE id = ? AND username = ?";
+            $sql = "UPDATE cart SET status = ? WHERE id = ? AND username = ?";
             MySQLDB::execute($sql, [$status, $product_id, $username]);
         } else {
             // Actualizar todos los productos del usuario
-            $sql = "UPDATE va_cart SET status = ? WHERE username = ? AND status = 'in_progress'";
+            $sql = "UPDATE cart SET status = ? WHERE username = ? AND status = 'in_progress'";
             MySQLDB::execute($sql, [$status, $username]);
         }
         

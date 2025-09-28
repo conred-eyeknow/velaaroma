@@ -277,4 +277,7 @@ class MySQLDB {
 
 // Configurar zona horaria
 date_default_timezone_set('America/Mexico_City');
+
+// Instanciar conexión global para compatibilidad
+$pdo = MySQLDB::getConnection();
 ?>

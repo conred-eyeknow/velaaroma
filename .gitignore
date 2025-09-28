@@ -144,3 +144,5 @@ public/build/
 # NOTA: Este .gitignore protege información sensible
 # como credenciales de base de datos y archivos de prueba
 # ==============================================
+
+**/images/

@@ -39,14 +39,14 @@ class MySQLProductsController {
     }
     
     public function obtainProductsAll() {
-        $sql = "SELECT * FROM list_product WHERE deleted_at IS NULL OR deleted_at = ''";
+        $sql = "SELECT * FROM list_product WHERE (deleted_at IS NULL OR deleted_at = '' OR deleted_at = ' ')";
         $result = MySQLDB::fetchAll($sql);
         
         sendJsonResponse(['products' => $result]);
     }
     
     public function getProduct($id) {
-        $sql = "SELECT * FROM list_product WHERE id = ? AND (deleted_at IS NULL OR deleted_at = '')";
+        $sql = "SELECT * FROM list_product WHERE id = ? AND (deleted_at IS NULL OR deleted_at = '' OR deleted_at = ' ')";
         $result = MySQLDB::fetchOne($sql, [$id]);
         
         if (!$result) {
@@ -63,7 +63,7 @@ class MySQLProductsController {
             sendJsonResponse(['error' => 'Categoría requerida'], 400);
         }
         
-        $sql = "SELECT * FROM list_product WHERE category = ? AND (deleted_at IS NULL OR deleted_at = '')";
+        $sql = "SELECT * FROM list_product WHERE category = ? AND (deleted_at IS NULL OR deleted_at = '' OR deleted_at = ' ')";
         $result = MySQLDB::fetchAll($sql, [$category]);
         
         sendJsonResponse(['products' => $result]);

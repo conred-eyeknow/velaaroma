@@ -6,17 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../general/general.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <!-- Verificación de Login -->
-    <script>
-        // Verificar si el usuario está logueado
-        if (sessionStorage.getItem('admin_logged_in') !== 'true') {
-            window.location.href = 'login.php';
-        }
-    </script>
     <style>
         .admin-container {
             max-width: 1200px;
@@ -33,43 +25,16 @@
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid #f0f0f0;
         }
         
         .admin-header h1 {
-            color: #333;
+            color: #8B4513;
             margin: 0;
+            font-size: 28px;
         }
         
-        .admin-header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .user-info {
-            background: #f8f9fa;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .btn-logout {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-logout:hover {
-            background: #c82333;
-            transform: translateY(-1px);
-        }        .btn-add {
+        .btn-add {
             background: linear-gradient(135deg, #8B4513, #D2691E);
             color: white;
             border: none;
@@ -265,42 +230,10 @@
             width: 60px;
             height: 60px;
             object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 5px;
         }
         
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .btn-edit, .btn-delete {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-        
-        .btn-edit {
-            background: #4CAF50;
-            color: white;
-        }
-        
-        .btn-edit:hover {
-            background: #45a049;
-        }
-        
-        .btn-delete {
-            background: #f44336;
-            color: white;
-        }
-        
-        .btn-delete:hover {
-            background: #da190b;
-        }        @media (max-width: 768px) {
+        @media (max-width: 768px) {
             .form-grid {
                 grid-template-columns: 1fr;
             }
@@ -318,19 +251,8 @@
 
 <div class="admin-container">
     <div class="admin-header">
-        <div>
-            <h1>🛍️ Panel de Administración - Vela Aroma</h1>
-        </div>
-        <div class="admin-header-right">
-            <div class="user-info">
-                <i class="fas fa-user"></i> 
-                <span id="currentUser">velaaroma</span>
-            </div>
-            <button onclick="showModal()" class="btn-add">➕ Agregar Nuevo Producto</button>
-            <button onclick="logout()" class="btn-logout">
-                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-            </button>
-        </div>
+        <h1>🛍️ Panel de Administración - Vela Aroma</h1>
+        <button onclick="showModal()" class="btn-add">➕ Agregar Nuevo Producto</button>
     </div>
 
     <!-- Lista de productos -->
@@ -430,15 +352,6 @@ function closeModal() {
     document.body.style.overflow = 'auto';
     document.getElementById('productForm').reset();
     document.getElementById('imagePreview').innerHTML = '';
-    
-    // Limpiar campos de edición
-    const hiddenId = document.getElementById('editProductId');
-    if (hiddenId) {
-        hiddenId.remove();
-    }
-    
-    // Restaurar título del modal
-    document.querySelector('.modal-header h2').textContent = '📦 Agregar Nuevo Producto';
 }
 
 // Cerrar modal al hacer clic fuera
@@ -471,18 +384,14 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
     
     const formData = new FormData(this);
     const submitBtn = this.querySelector('button[type="submit"]');
-    const isEditing = formData.get('id');
     
     // Mostrar estado de carga
     const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = isEditing ? '⏳ Actualizando...' : '⏳ Guardando...';
+    submitBtn.innerHTML = '⏳ Guardando...';
     submitBtn.disabled = true;
     
-    // Determinar endpoint - usar update.php para ediciones (maneja imágenes también)
-    const endpoint = isEditing ? '/api/products/update.php' : '/api/products/create-with-image.php';
-    
     // Enviar datos
-    fetch(endpoint, {
+    fetch('/api/products/create-with-image.php', {
         method: 'POST',
         body: formData
     })
@@ -545,7 +454,6 @@ function renderProducts() {
                     <th>Mayoreo</th>
                     <th>Menudeo</th>
                     <th>Dimensiones</th>
-                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -563,16 +471,6 @@ function renderProducts() {
                 <td>$${parseFloat(product.mayoreo || 0).toFixed(2)}</td>
                 <td>$${parseFloat(product.menudeo || 0).toFixed(2)}</td>
                 <td><small>${dimensions}</small></td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="btn-edit" onclick="editProduct(${product.id})" title="Editar">
-                            <i class="fas fa-edit"></i> Editar
-                        </button>
-                        <button class="btn-delete" onclick="deleteProduct(${product.id}, '${product.name}')" title="Eliminar">
-                            <i class="fas fa-trash"></i> Eliminar
-                        </button>
-                    </div>
-                </td>
             </tr>
         `;
     });
@@ -585,99 +483,8 @@ function renderProducts() {
     document.getElementById('productsContainer').innerHTML = html;
 }
 
-// === EDITAR PRODUCTO ===
-function editProduct(productId) {
-    const product = products.find(p => p.id == productId);
-    if (!product) {
-        alert('❌ Producto no encontrado');
-        return;
-    }
-    
-    // Llenar el formulario con los datos del producto
-    document.getElementById('name').value = product.name || '';
-    document.getElementById('category').value = product.category || '';
-    document.getElementById('mayoreo').value = product.mayoreo || '';
-    document.getElementById('menudeo').value = product.menudeo || '';
-    document.getElementById('largo').value = product.largo || '';
-    document.getElementById('alto').value = product.alto || '';
-    document.getElementById('ancho').value = product.ancho || '';
-    document.getElementById('description').value = product.description || '';
-    
-    // Cambiar el título del modal
-    document.querySelector('.modal-header h2').textContent = '✏️ Editar Producto';
-    
-    // Agregar campo oculto con el ID
-    let form = document.getElementById('productForm');
-    let hiddenId = document.getElementById('editProductId');
-    if (!hiddenId) {
-        hiddenId = document.createElement('input');
-        hiddenId.type = 'hidden';
-        hiddenId.id = 'editProductId';
-        hiddenId.name = 'id';
-        form.appendChild(hiddenId);
-    }
-    hiddenId.value = productId;
-    
-    showModal();
-}
-
-// === ELIMINAR PRODUCTO ===
-function deleteProduct(productId, productName) {
-    if (!confirm(`🗑️ ¿Estás seguro de que quieres eliminar "${productName}"?\n\nEsta acción no se puede deshacer.`)) {
-        return;
-    }
-    
-    // Realizar petición de eliminación
-    fetch(`/api/products/delete.php`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: productId })
-    })
-    .then(response => {
-        // Verificar si la respuesta es OK
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
-        }
-        return response.text(); // Obtener como texto primero
-    })
-    .then(text => {
-        // Intentar parsear como JSON
-        try {
-            const data = JSON.parse(text);
-            if (data.success) {
-                alert('✅ Producto eliminado exitosamente');
-                loadProducts(); // Recargar la lista
-            } else {
-                alert('❌ Error al eliminar: ' + (data.error || 'Error desconocido'));
-            }
-        } catch (e) {
-            console.error('Respuesta no es JSON válido:', text);
-            alert('❌ Error en la respuesta del servidor');
-        }
-    })
-    .catch(error => {
-        console.error('Error completo:', error);
-        alert('❌ Error de conexión: ' + error.message);
-    });
-}
-
-// === LOGOUT ===
-function logout() {
-    if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
-        sessionStorage.removeItem('admin_logged_in');
-        sessionStorage.removeItem('admin_user');
-        window.location.href = 'login.php';
-    }
-}
-
 // === INICIALIZACIÓN ===
 document.addEventListener('DOMContentLoaded', function() {
-    // Mostrar usuario actual
-    const currentUser = sessionStorage.getItem('admin_user') || 'velaaroma';
-    document.getElementById('currentUser').textContent = currentUser;
-    
     loadProducts();
 });
 </script>
