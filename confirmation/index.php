@@ -54,7 +54,7 @@ include "./../eyeknow-config-web/init.php";
         console.log("Email:", email);
 
         $.ajax({
-            url: 'https://api.velaaroma.com/v1/users/confirmation',
+            url: '/api/users/confirmation',
             type: "POST",
             data: {
                 code: code,

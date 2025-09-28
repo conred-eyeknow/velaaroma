@@ -76,7 +76,7 @@ include "./../eyeknow-config-web/init.php";
         var email = "<?= $_GET['email'];?>";
 
         $.ajax({
-            url: 'https://api.velaaroma.com/v1/users/new_password',
+            url: '/api/users/new_password',
             type: "POST",
             data:'email=' + email + '&password=' + password+ '&code=' + code,
             success: function(response){ 

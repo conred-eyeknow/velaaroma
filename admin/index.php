@@ -32,7 +32,7 @@ getProductsCart();
 
 function getProductsCart() {
     $.ajax({
-        url: 'https://api.velaaroma.com/v1/products',
+        url: '/api/products',
         type: "GET",
         success: function(response){ 
             populateTable(response.products);
@@ -100,7 +100,7 @@ function populateTable(products) {
 function updateListProduct(editableObj,column,id) {
     $(editableObj).css("background","#ffffff");
     $.ajax({
-        url: 'https://api.velaaroma.com/v1/products/update',
+        url: '/api/products/update',
         type: "POST",
         data: 'column=' + column + '&val=' + $(editableObj).text() + '&id=' + id,
         success: function(r){
@@ -145,7 +145,7 @@ function saveNewRow(button) {
     };
 
     $.ajax({
-        url: 'https://api.velaaroma.com/v1/products/create',
+        url: '/api/products/create',
         type: "POST",
         data: product,
         success: function(response){

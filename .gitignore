@@ -1,0 +1,153 @@
+# ==============================================
+# .gitignore para Proyecto Vela Aroma
+# E-commerce PHP con MySQL
+# ==============================================
+
+# === ARCHIVOS DE CONFIGURACIÓN SENSIBLES ===
+# Credenciales de base de datos
+**/mysql_config*.php
+**/database_config*.php
+api/mysql_config.php
+api/mysql_config_real.php
+api/mysql_config_prod.php
+
+# Archivos de configuración con contraseñas
+config.php
+.env
+.env.local
+.env.production
+
+# === ARCHIVOS DE DESARROLLO Y TESTING ===
+# Archivos de prueba temporales
+api/test_*.php
+api/simple_test.php
+api/explore_*.php
+api/create_missing_tables.php
+api/database_diagnosis.php
+database_test.php
+*.test.php
+test_*.php
+
+# Archivos de diagnóstico
+ESTADO_ACTUAL.md
+SOLUCION_IP.md
+
+# === LOGS Y ARCHIVOS TEMPORALES ===
+# Logs de PHP y servidor
+*.log
+error.log
+access.log
+php_errors.log
+
+# Archivos temporales
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Archivos de backup
+*.bak
+*.backup
+*.old
+
+# === DIRECTORIOS DE CACHE Y TEMPORALES ===
+# Cache de aplicación
+cache/
+tmp/
+temp/
+logs/
+
+# Cache de sistemas
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# === ARCHIVOS DE DESARROLLO ===
+# IDEs y editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.buildpath
+.settings/
+
+# === DEPENDENCIAS ===
+# Node.js (si se usa)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Composer (si se usa)
+vendor/
+composer.lock
+
+# === ARCHIVOS DE SISTEMA ===
+# macOS
+.AppleDouble
+.LSOverride
+Icon
+
+# Windows
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# === UPLOADS Y MEDIA (OPCIONAL) ===
+# Descomenta si no quieres versionar uploads de usuarios
+# uploads/
+# media/user_uploads/
+
+# === ARCHIVOS ESPECÍFICOS DEL PROYECTO ===
+# Archivos de servidor local
+start-local.sh
+server-temp.py
+
+# Archivos comprimidos de desarrollo
+*.tar.gz
+html.tar.gz
+
+# Carpetas de trash/basura
+trash/
+basura/
+old/
+
+# === ARCHIVOS DE PRODUCCIÓN ===
+# Scripts de deployment
+deploy.sh
+deploy.php
+
+# Archivos de configuración de servidor
+.htaccess.backup
+robots.txt.backup
+
+# === DATOS SENSIBLES ===
+# Archivos con información personal
+customers_data.sql
+users_backup.sql
+database_dump.sql
+
+# === ARCHIVOS DE DOCUMENTACIÓN TEMPORAL ===
+# Notas de desarrollo
+TODO.md
+NOTES.md
+DEVELOPMENT.md
+
+# === CARPETAS DE BUILD ===
+# Si usas algún sistema de build
+dist/
+build/
+public/build/
+
+# ==============================================
+# NOTA: Este .gitignore protege información sensible
+# como credenciales de base de datos y archivos de prueba
+# ==============================================

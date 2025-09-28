@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API - Vela Aroma</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Test de API</h1>
+    <div id="results"></div>
+    
+    <script>
+    function testAPI() {
+        console.log('Iniciando test...');
+        
+        $.ajax({
+            url: '/api/products/category',
+            type: "GET",
+            data: 'category=figura_aroma',
+            success: function(response) {
+                console.log('✅ Respuesta exitosa:', response);
+                console.log('✅ Productos:', response.products);
+                console.log('✅ Tipo:', typeof response.products);
+                console.log('✅ Es array:', Array.isArray(response.products));
+                
+                if (response.products && Array.isArray(response.products)) {
+                    $('#results').html('<h2>✅ Test EXITOSO</h2><p>Se encontraron ' + response.products.length + ' productos:</p><ul>' + 
+                        response.products.map(p => '<li>' + p.name + '</li>').join('') + '</ul>');
+                } else {
+                    $('#results').html('<h2>❌ Error: products no es un array válido</h2>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('❌ Error en AJAX:', error);
+                console.error('❌ Status:', status);
+                console.error('❌ Response:', xhr.responseText);
+                $('#results').html('<h2>❌ Error de conexión</h2><p>' + error + '</p>');
+            }
+        });
+    }
+    
+    // Ejecutar test automáticamente
+    $(document).ready(function() {
+        testAPI();
+    });
+    </script>
+</body>
+</html>

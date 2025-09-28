@@ -90,7 +90,7 @@
         var status = "in_progress";
 
         $.ajax({
-            url: 'https://api.velaaroma.com/v1/cart/products/sell',
+            url: '/api/cart/products/sell',
             type: "GET",
             data: 'username=' + username + '&status=' + status,
             success: function(response) {
@@ -209,7 +209,7 @@
         var status = "deleted";
 
         $.ajax({
-            url: 'https://api.velaaroma.com/v2/cart/update_status',
+            url: '/api/cart/update_status',
             type: "POST",
             data: 'product_id=' + product_id + '&username=' + username + '&status=' + status,
             success: function(response){ 

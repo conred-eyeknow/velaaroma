@@ -75,7 +75,7 @@ include "./../eyeknow-config-web/init.php";
         var subject = '¡Recupera tu contraseña!';
 
         $.ajax({
-            url: 'https://api.velaaroma.com/v1/users/recovery',
+            url: '/api/users/recovery',
             type: "POST",
             data:'email=' + email + '&subject=' + subject,
             success: function(response){ 

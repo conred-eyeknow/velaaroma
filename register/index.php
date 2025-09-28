@@ -97,7 +97,7 @@ function register() {
     var subject = "Vela Aroma - Confirma tu correo electrónico";
 
     $.ajax({
-        url: 'https://api.velaaroma.com/v1/users',
+        url: '/api/users',
         type: "POST",
         data: 'name=' + name + '&first_last_name=' + first_last_name + '&second_last_name=' 
             + second_last_name + '&email=' + email + '&password=' + password + '&username=' + username 

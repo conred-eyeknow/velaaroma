@@ -52,7 +52,7 @@ include "./../eyeknow-config-web/init.php";
         var pass = document.getElementById("emp_password").value;
     
         $.ajax({
-            url: 'https://api.velaaroma.com/v1/users/validate',
+            url: '/api/users/validate',
             type: "POST",
             data:'username=' + user + '&password=' + pass,
             success: function(response){ 

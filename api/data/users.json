@@ -1,0 +1,18 @@
+[
+    {
+        "id": "admin_1759082710",
+        "name": "Administrador",
+        "first_last_name": "Sistema",
+        "second_last_name": "",
+        "email": "admin@velaaroma.com",
+        "username": "admin",
+        "password": "$2y$12$7iaWXMbtpH74In42Ut0aGOOWKqyr\/\/50t4HFYQGqh.x7TR2ggu2aG",
+        "address": "",
+        "zipcode": "",
+        "telephone": "",
+        "virtual_address_is_validated": "1",
+        "validation_code": null,
+        "role": "admin",
+        "created_at": "2025-09-28 18:05:10"
+    }
+]

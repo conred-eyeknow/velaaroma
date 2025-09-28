@@ -158,7 +158,7 @@
         var status = "in_progress";
 
         $.ajax({
-            url: 'https://api.velaaroma.com/v1/cart/products',
+            url: '/api/cart/products',
             type: "POST",
             data: 'username=' + username + '&status=' + status + '&color=' + color + '&aroma=' + aroma
             + '&cantidad=' + cantidad + '&product_id=' + product_id,
@@ -211,7 +211,9 @@
         } else {
             if (name != null) {
                 var loginLink = document.querySelector('.login-link');
-                loginLink.textContent = "Hola, " + name + "!";
+                if (loginLink) {
+                    loginLink.textContent = "Hola, " + name + "!";
+                }
             }
         }
     }
@@ -226,11 +228,14 @@
         var status = "in_progress";
 
         $.ajax({
-            url: 'https://api.velaaroma.com/v1/cart/products',
+            url: '/api/cart/products',
             type: "GET",
             data: 'username=' + username + '&status=' + status,
             success: function(response){ 
-                document.querySelector('.cart-count').textContent = response.products;
+                var cartCount = document.querySelector('.cart-count');
+                if (cartCount) {
+                    cartCount.textContent = response.products;
+                }
             }
         });
     }
@@ -271,12 +276,23 @@
 
     function getProductsByCategory(category, isLongImage) {
         $.ajax({
-            url: 'https://api.velaaroma.com/v1/cart/products/category',
+            url: '/api/products/category',
             type: "GET",
             data: 'category=' + category,
             success: function(response){ 
-                console.log(response.products);
-                populateProducts(response.products, isLongImage);
+                console.log('Respuesta completa:', response);
+                console.log('Productos:', response.products);
+                console.log('Tipo de productos:', typeof response.products);
+                if (response.products && Array.isArray(response.products)) {
+                    populateProducts(response.products, isLongImage);
+                } else {
+                    console.error('response.products no es un array válido');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error en AJAX:', error);
+                console.error('Status:', status);
+                console.error('Response:', xhr.responseText);
             }
         });
     }
